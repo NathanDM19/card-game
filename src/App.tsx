@@ -27,6 +27,7 @@ function App() {
     setTimer(0);
     setWon(false);
     setFlippedCards([]);
+    setGuesses([]);
     const newCards: Card[] = [];
     const cardsArray = [...cardImages.slice(0, cardsUsed / 2), ...cardImages.slice(0, cardsUsed / 2)];
     while (cardsArray.length) {
@@ -84,21 +85,18 @@ function App() {
     tempCards[places[0]].flipped = false;
     tempCards[places[1]].flipped = false;
     setGuesses([...guesses, places[0], places[1]]);
-    setCards(cards);
+    setCards(tempCards);
     setPaused(false);
   }
 
   function checkWin() {
-    let won: boolean = true;
     for (let i = 0; i < cards.length; i++) {
       if (!cards[i].matched) {
-        won = false;
+        return;
       }
     }
-    if (won) {
-      clearInterval(intervalRef.current);
-      setWon(true);
-    }
+    clearInterval(intervalRef.current);
+    setWon(true);
   }
 
   function changeTotalCards(total: number) {
